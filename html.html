@@ -1,6 +1,3 @@
-#include "config.h"
-
-const char* indexHtml = R"=====(
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -186,15 +183,15 @@ const char* indexHtml = R"=====(
         } ;
 
         const tail_angles = {
-            'l' : 180
-            'm' : 90,
             'r' : 0,
+            'm' : 90,
+            'l' : 180
         } ;
 
         const head_angles = {
-            'l' : [180, 180]
-            'm' : [90, 90],
             'r' : [0, 0],
+            'm' : [90, 90],
+            'l' : [180, 180]
         } ;
 
         function init() {
@@ -303,4 +300,3 @@ const char* indexHtml = R"=====(
     </script>
 </body>
 </html>
-)=====";

@@ -1,6 +1,5 @@
 // Import
 
-#include <driver/ledc.h>
 #include <WiFi.h>
 #include <stdio.h>
 #include "config.h"
@@ -22,7 +21,8 @@ public:
 
     LedcDefine(int pin, int freq = 5000, int resolution = 8)
         : pin(pin), freq(freq), resolution(resolution){
-        ledcAttach(pin, freq, resolution) ;
+        ledcSetup(pin, freq, resolution) ;
+        ledcAttachPin(pin, pin) ;
     }
 
     void write(int duty){

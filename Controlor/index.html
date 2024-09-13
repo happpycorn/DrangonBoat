@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <title>Drongan Boat Controlor | Fhehs</title>
 </head>
-<body>
+<body onload="init();">
 
     <div class="wrapper">
         <!-- View Bar -->
         <section class="view-bar">
             <div class="bar value">
-                <span>L</span><span id="Left-value">0</span>
-                <span>R</span><span id="Right-value">0</span>
+                <span id="Left-value">0</span>
+                <span id="Right-value">0</span>
             </div>
             <div class="bar color">
                 <span>LED</span>
