@@ -2,7 +2,6 @@
 
 #include <WiFi.h>
 #include <stdio.h>
-#include "config.h"
 #include <WebServer.h>
 #include <FS.h>
 #include <SPIFFS.h>
