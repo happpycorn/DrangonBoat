@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/jquery-3.6.0.min.js"></script>
+    <script src="/createjs.min.js"></script>
+    <script src="/hammer.min.js"></script>
     <title>Drongan Boat Controlor | Fhehs</title>
+    <script src="/script.js"></script>
 </head>
 <body onload="init();">
-
     <div class="wrapper">
         <!-- View Bar -->
         <section class="view-bar">
@@ -28,9 +28,9 @@
             </div>
             <div class="bar tail">
                 <span>Tail</span>
-                <button class="tail" onclick="tail('r')">R</button>
-                <button class="tail" onclick="tail('m')">M</button>
                 <button class="tail" onclick="tail('l')">L</button>
+                <button class="tail" onclick="tail('m')">M</button>
+                <button class="tail" onclick="tail('r')">R</button>
             </div>
         </section>
         <section class="control">
@@ -38,13 +38,11 @@
                 <canvas id="joystick"></canvas>
             </div>
             <div id="head-frame">
-                <button class="head" onclick="head('r')">R</button>
-                <button class="head" onclick="head('m')">M</button>
-                <button class="head" onclick="head('l')">L</button>
+                <button class="head" onclick="f_head('l')">L</button>
+                <button class="head" onclick="f_head('m')">M</button>
+                <button class="head" onclick="f_head('r')">R</button>
             </div>
         </section>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>

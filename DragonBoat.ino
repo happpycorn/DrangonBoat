@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "config.h"
 #include <WebServer.h>
+#include <FS.h>
+#include <SPIFFS.h>
 
 // Defind class
 
@@ -84,11 +86,84 @@ void tail(){
     tailObj.write(duty) ;
 }
 
+// Load file
+
+void handleRoot() {
+  File file = SPIFFS.open("/index.html", FILE_READ) ;
+  if (!file) {
+    server.send(404, "text/plain", "File Not Found") ;
+    return;
+  }
+
+  String htmlContent;
+  while (file.available()) {
+    htmlContent += char(file.read()) ;
+  }
+  file.close() ;
+  
+  server.send(200, "text/html", htmlContent) ;
+}
+
+void handleStyle() {
+    File file = SPIFFS.open("/style.css", "r");
+    if (!file) {
+        server.send(404, "text/plain", "File Not Found");
+        return;
+    }
+    server.streamFile(file, "text/css");
+    file.close();
+}
+
+void handleJQuery() {
+    File file = SPIFFS.open("/jquery-3.6.0.min.js", "r");
+    if (!file) {
+        server.send(404, "text/plain", "File Not Found");
+        return;
+    }
+    server.streamFile(file, "application/javascript");
+    file.close();
+}
+
+void handleCreateJS() {
+    File file = SPIFFS.open("/createjs.min.js", "r");
+    if (!file) {
+        server.send(404, "text/plain", "File Not Found");
+        return;
+    }
+    server.streamFile(file, "application/javascript");
+    file.close();
+}
+
+void handleHammerJS() {
+    File file = SPIFFS.open("/hammer.min.js", "r");
+    if (!file) {
+        server.send(404, "text/plain", "File Not Found");
+        return;
+    }
+    server.streamFile(file, "application/javascript");
+    file.close();
+}
+
+void handleScript() {
+    File file = SPIFFS.open("/script.js", "r");
+    if (!file) {
+        server.send(404, "text/plain", "File Not Found");
+        return;
+    }
+    server.streamFile(file, "application/javascript");
+    file.close();
+}
+
 // Main
 
 void setup(){
 
     Serial.begin(115200) ;
+
+    if (!SPIFFS.begin(true)) {
+        Serial.println("SPIFFS Mount Failed") ;
+        return ;
+    }
 
     WiFi.mode(WIFI_AP) ;
     WiFi.softAP(ssid, pwd) ;
@@ -97,7 +172,13 @@ void setup(){
     Serial.print("AP IP address: ") ;
     Serial.println(WiFi.softAPIP()) ;
 
-    server.on("/", []() {server.send(200, "text/html", indexHtml);}) ;
+    server.on("/", handleRoot) ;
+    server.on("/style.css", handleStyle) ;
+    server.on("/jquery-3.6.0.min.js", handleJQuery) ;
+    server.on("/createjs.min.js", handleCreateJS) ;
+    server.on("/hammer.min.js", handleHammerJS) ;
+    server.on("/script.js", handleScript) ;
+
     server.on("/motor", motor) ;
     server.on("/led", led) ;
     server.on("/head", head) ;
