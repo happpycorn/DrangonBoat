@@ -103,6 +103,8 @@ const char* indexHtml = R"=====(
 
         #joystick {
             border-radius: 50%;
+            width: 200px;
+            height: 200px;
 
             backdrop-filter: blur(5.5px);
             -webkit-backdrop-filter: blur(5.5px);
@@ -159,9 +161,9 @@ const char* indexHtml = R"=====(
                 <canvas id="joystick"></canvas>
             </div>
             <div id="head-frame">
-                <button class="head" onclick="head('l')">L</button>
-                <button class="head" onclick="head('m')">M</button>
-                <button class="head" onclick="head('r')">R</button>
+                <button class="head" onclick="f_head('l')">L</button>
+                <button class="head" onclick="f_head('m')">M</button>
+                <button class="head" onclick="f_head('r')">R</button>
             </div>
         </section>
     </div>
@@ -186,15 +188,15 @@ const char* indexHtml = R"=====(
         } ;
 
         const tail_angles = {
-            'l' : 180
+            'l' : 180,
             'm' : 90,
-            'r' : 0,
+            'r' : 0
         } ;
 
         const head_angles = {
-            'l' : [180, 180]
+            'l' : [180, 180],
             'm' : [90, 90],
-            'r' : [0, 0],
+            'r' : [0, 0]
         } ;
 
         function init() {
@@ -295,7 +297,7 @@ const char* indexHtml = R"=====(
         xhttp.send() ;
         }
 
-        function head(angle_arg) {
+        function f_head(angle_arg) {
         var xhttp = new XMLHttpRequest() ;
         xhttp.open("GET", `/head?duty=${head_angles[angle_arg][0]},${head_angles[angle_arg][1]}`, true) ;
         xhttp.send() ;

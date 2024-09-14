@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+    <title>Drongan Boat Controlor | Fhehs</title>
+</head>
+<body onload="init();">
+
+    <div class="wrapper">
+        <!-- View Bar -->
+        <section class="view-bar">
+            <div class="bar value">
+                <span id="Left-value">0</span>
+                <span id="Right-value">0</span>
+            </div>
+            <div class="bar color">
+                <span>LED</span>
+                <button class="color" onclick="color('r')">R</button>
+                <button class="color" onclick="color('y')">Y</button>
+                <button class="color" onclick="color('g')">G</button>
+                <button class="color" onclick="color('b')">B</button>
+                <button class="color" onclick="color('n')">N</button>
+            </div>
+            <div class="bar tail">
+                <span>Tail</span>
+                <button class="tail" onclick="tail('r')">R</button>
+                <button class="tail" onclick="tail('m')">M</button>
+                <button class="tail" onclick="tail('l')">L</button>
+            </div>
+        </section>
+        <section class="control">
+            <div id="joystick-frame">
+                <canvas id="joystick"></canvas>
+            </div>
+            <div id="head-frame">
+                <button class="head" onclick="head('r')">R</button>
+                <button class="head" onclick="head('m')">M</button>
+                <button class="head" onclick="head('l')">L</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

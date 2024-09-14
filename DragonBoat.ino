@@ -5,24 +5,18 @@
 #include "config.h"
 #include <WebServer.h>
 
-const char* ssid_AP = "Esp32Cam_car" ;
-const char* pwd_AP = "00000000" ;
-
-WebServer server(80) ;
+// Defind class
 
 class LedcDefine {
 private:
 
     int pin ;
-    int freq ;
-    int resolution ;
 
 public:
 
     LedcDefine(int pin, int freq = 5000, int resolution = 8)
-        : pin(pin), freq(freq), resolution(resolution){
-        ledcSetup(pin, freq, resolution) ;
-        ledcAttachPin(pin, pin) ;
+        : pin(pin){
+        ledcAttach(pin, freq, resolution) ;
     }
 
     void write(int duty){
@@ -30,42 +24,28 @@ public:
     }
 } ;
 
-void motor() ;
+// Defind obj
+
+const char* ssid = "Fhehs-DragonBoat" ;
+const char* pwd = "00000000" ;
+
+WebServer server(80) ;
+
 LedcDefine motorFL{32} ;
 LedcDefine motorBL{33} ;
-LedcDefine motorFR{34} ;
-LedcDefine motorBR{35} ;
+LedcDefine motorFR{22} ;
+LedcDefine motorBR{23} ;
 
-void led() ;
 LedcDefine LEDR{12} ;
 LedcDefine LEDG{13} ;
 LedcDefine LEDB{14} ;
 
-void head() ;
 LedcDefine headVer{25, 50, 16} ;
 LedcDefine headHor{26, 50, 16} ;
 
-void tail() ;
 LedcDefine tailObj{27, 50, 16} ;
 
-void setup(){
-
-    Serial.begin(115200) ;
-
-    WiFi.mode(WIFI_AP) ;
-    WiFi.softAP(ssid_AP, pwd_AP) ;
-
-    Serial.println() ;
-    Serial.print("AP IP address: ") ;
-    Serial.println(WiFi.softAPIP()) ;
-
-    server.on("/", []() {server.send(200, "text/html", indexHtml);}) ;
-    server.on("/motor", motor) ;
-    server.on("/led", led) ;
-    server.on("/head", head) ;
-    server.on("/tail", tail) ;
-
-}
+// Defind function
 
 void motor(){
 
@@ -102,6 +82,29 @@ void tail(){
     float duty = server.arg("duty").toInt() ;
 
     tailObj.write(duty) ;
+}
+
+// Main
+
+void setup(){
+
+    Serial.begin(115200) ;
+
+    WiFi.mode(WIFI_AP) ;
+    WiFi.softAP(ssid, pwd) ;
+
+    Serial.println() ;
+    Serial.print("AP IP address: ") ;
+    Serial.println(WiFi.softAPIP()) ;
+
+    server.on("/", []() {server.send(200, "text/html", indexHtml);}) ;
+    server.on("/motor", motor) ;
+    server.on("/led", led) ;
+    server.on("/head", head) ;
+    server.on("/tail", tail) ;
+
+    server.begin() ;
+    Serial.println("Start!") ;
 }
 
 void loop(){server.handleClient();}
