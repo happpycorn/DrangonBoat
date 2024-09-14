@@ -126,7 +126,7 @@ function tail(angle_arg) {
   xhttp.send() ;
 }
 
-function head(angle_arg) {
+function f_head(angle_arg) {
   var xhttp = new XMLHttpRequest() ;
   xhttp.open("GET", `/head?duty=${head_angles[angle_arg][0]},${head_angles[angle_arg][1]}`, true) ;
   xhttp.send() ;

@@ -81,6 +81,7 @@ button{
     border-radius: 10px;
     box-shadow: 0 4px 30px rgba(35, 35, 35, 0.1);
     overflow: auto;
+    color: #232323;
 }
 
 button:hover{
