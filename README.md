@@ -24,7 +24,9 @@ SPIFFS 擴充 : [https://github.com/espx-cz/arduino-spiffs-upload](https://githu
 
 本程式透過將 Esp32 晶片設置為一個網路 AP，並且把 Html 發布至主頁（一般為192.168.4.1）。在透過手機連線後便可以透過網站操作龍舟。
 
-程式流程圖
+程式流程圖：
+
+<img src="img/2024DragonBoat.drawio.png" alt="流程圖" width="800"> 
 
 ## 常見錯誤
 
