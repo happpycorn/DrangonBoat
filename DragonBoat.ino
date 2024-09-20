@@ -1,22 +1,27 @@
 // Import
 
+#include <driver/ledc.h>
 #include <WiFi.h>
 #include <stdio.h>
+#include "config.h"
 #include <WebServer.h>
-#include <FS.h>
-#include <SPIFFS.h>
 
-// Defind class
+const char* ssid_AP = "Esp32Cam_car" ;
+const char* pwd_AP = "00000000" ;
+
+WebServer server(80) ;
 
 class LedcDefine {
 private:
 
     int pin ;
+    int freq ;
+    int resolution ;
 
 public:
 
     LedcDefine(int pin, int freq = 5000, int resolution = 8)
-        : pin(pin){
+        : pin(pin), freq(freq), resolution(resolution){
         ledcAttach(pin, freq, resolution) ;
     }
 
@@ -25,28 +30,42 @@ public:
     }
 } ;
 
-// Defind obj
-
-const char* ssid = "Fhehs-DragonBoat" ;
-const char* pwd = "00000000" ;
-
-WebServer server(80) ;
-
+void motor() ;
 LedcDefine motorFL{32} ;
 LedcDefine motorBL{33} ;
-LedcDefine motorFR{22} ;
-LedcDefine motorBR{23} ;
+LedcDefine motorFR{34} ;
+LedcDefine motorBR{35} ;
 
+void led() ;
 LedcDefine LEDR{12} ;
 LedcDefine LEDG{13} ;
 LedcDefine LEDB{14} ;
 
+void head() ;
 LedcDefine headVer{25, 50, 16} ;
 LedcDefine headHor{26, 50, 16} ;
 
+void tail() ;
 LedcDefine tailObj{27, 50, 16} ;
 
-// Defind function
+void setup(){
+
+    Serial.begin(115200) ;
+
+    WiFi.mode(WIFI_AP) ;
+    WiFi.softAP(ssid_AP, pwd_AP) ;
+
+    Serial.println() ;
+    Serial.print("AP IP address: ") ;
+    Serial.println(WiFi.softAPIP()) ;
+
+    server.on("/", []() {server.send(200, "text/html", indexHtml);}) ;
+    server.on("/motor", motor) ;
+    server.on("/led", led) ;
+    server.on("/head", head) ;
+    server.on("/tail", tail) ;
+
+}
 
 void motor(){
 
@@ -83,108 +102,6 @@ void tail(){
     float duty = server.arg("duty").toInt() ;
 
     tailObj.write(duty) ;
-}
-
-// Load file
-
-void handleRoot() {
-  File file = SPIFFS.open("/index.html", FILE_READ) ;
-  if (!file) {
-    server.send(404, "text/plain", "File Not Found") ;
-    return;
-  }
-
-  String htmlContent;
-  while (file.available()) {
-    htmlContent += char(file.read()) ;
-  }
-  file.close() ;
-  
-  server.send(200, "text/html", htmlContent) ;
-}
-
-void handleStyle() {
-    File file = SPIFFS.open("/style.css", "r");
-    if (!file) {
-        server.send(404, "text/plain", "File Not Found");
-        return;
-    }
-    server.streamFile(file, "text/css");
-    file.close();
-}
-
-void handleJQuery() {
-    File file = SPIFFS.open("/jquery-3.6.0.min.js", "r");
-    if (!file) {
-        server.send(404, "text/plain", "File Not Found");
-        return;
-    }
-    server.streamFile(file, "application/javascript");
-    file.close();
-}
-
-void handleCreateJS() {
-    File file = SPIFFS.open("/createjs.min.js", "r");
-    if (!file) {
-        server.send(404, "text/plain", "File Not Found");
-        return;
-    }
-    server.streamFile(file, "application/javascript");
-    file.close();
-}
-
-void handleHammerJS() {
-    File file = SPIFFS.open("/hammer.min.js", "r");
-    if (!file) {
-        server.send(404, "text/plain", "File Not Found");
-        return;
-    }
-    server.streamFile(file, "application/javascript");
-    file.close();
-}
-
-void handleScript() {
-    File file = SPIFFS.open("/script.js", "r");
-    if (!file) {
-        server.send(404, "text/plain", "File Not Found");
-        return;
-    }
-    server.streamFile(file, "application/javascript");
-    file.close();
-}
-
-// Main
-
-void setup(){
-
-    Serial.begin(115200) ;
-
-    if (!SPIFFS.begin(true)) {
-        Serial.println("SPIFFS Mount Failed") ;
-        return ;
-    }
-
-    WiFi.mode(WIFI_AP) ;
-    WiFi.softAP(ssid, pwd) ;
-
-    Serial.println() ;
-    Serial.print("AP IP address: ") ;
-    Serial.println(WiFi.softAPIP()) ;
-
-    server.on("/", handleRoot) ;
-    server.on("/style.css", handleStyle) ;
-    server.on("/jquery-3.6.0.min.js", handleJQuery) ;
-    server.on("/createjs.min.js", handleCreateJS) ;
-    server.on("/hammer.min.js", handleHammerJS) ;
-    server.on("/script.js", handleScript) ;
-
-    server.on("/motor", motor) ;
-    server.on("/led", led) ;
-    server.on("/head", head) ;
-    server.on("/tail", tail) ;
-
-    server.begin() ;
-    Serial.println("Start!") ;
 }
 
 void loop(){server.handleClient();}

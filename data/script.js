@@ -23,9 +23,10 @@ const tail_angles = {
 } ;
 
 const head_angles = {
-    'r' : [0, 0],
+    'r' : [0, 90],
     'm' : [90, 90],
-    'l' : [180, 180]
+    'l' : [180, 90],
+    'n' : [90, 0]
 } ;
 
 function init() {
