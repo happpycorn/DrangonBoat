@@ -24,7 +24,9 @@ SPIFFS 擴充 : [https://github.com/espx-cz/arduino-spiffs-upload](https://githu
 
 本程式透過將 Esp32 晶片設置為一個網路 AP，並且把 Html 發布至主頁（一般為192.168.4.1）。在透過手機連線後便可以透過網站操作龍舟。
 
-程式流程圖
+程式流程圖：
+
+<img src="img/2024DragonBoat.drawio.png" alt="流程圖" width="800"> 
 
 ## 常見錯誤
 
@@ -66,8 +68,9 @@ ledcAttatch(pin, freq, solution) ;
 
 ## 以往設計
 
-龍舟操控程式 V1.0：
-
-遙控小車操控程式：
-
-Esp32Cam 小車操控程式：
+<a href="https://github.com/happpycorn/Esp32Cam-Car">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=happpycorn&repo=Esp32Cam-Car&theme=onedark&title_color=fff&icon_color=f9f9f9&text_color=9f9f9f&bg_color=151515" alt="Esp32Cam-Car">
+</a>
+<a href="https://github.com/happpycorn/2023_DragonBoat">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=happpycorn&repo=2023_DragonBoat&theme=onedark&title_color=fff&icon_color=f9f9f9&text_color=9f9f9f&bg_color=151515" alt="2023_DragonBoat">
+</a>
